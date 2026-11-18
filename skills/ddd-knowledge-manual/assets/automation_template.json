@@ -1,0 +1,7 @@
+{
+  "name": "知识手册半年回顾提醒",
+  "scheduleType": "recurring",
+  "rrule": "FREQ=WEEKLY;BYDAY=MO",
+  "status": "PAUSED",
+  "prompt": "检查知识手册版本库是否需要回顾：运行 `python scripts/check_due.py --repo ./knowledge-manual` 得到期手册列表（today >= next_review_due）。若无到期，结束。若有到期：读取当前 <connector-status>，按 reminder_spec.md 路由规则——0 个平台连则仅在对话内列出红色告警；1 个连则直发该平台；≥2 个连则用 AskUserQuestion 让用户选发哪个平台（提供「全部」选项）。对所选平台，运行 `scripts/notify.py --due-file due.json --platform <P>` 渲染提醒卡片/消息并发送。本自动化只通知、绝不自动修改手册内容；若 sync_status 有 pending 也一并提示。"
+}

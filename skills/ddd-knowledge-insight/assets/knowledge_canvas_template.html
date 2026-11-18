@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识分析画布</title>
+<!--
+  填充指引（不渲染）：
+  1. 用本模板填充知识分析结果。每格四个字段：结论 / 原话支撑 / 置信度 / 状态。
+  2. 置信度 class：conf-high(高) / conf-mid(中) / conf-low(低)。低置信度格自动高亮。
+  3. 状态取值：verified(已验证) / hypothesis(假设·待验证) / insufficient(证据不足·建议补访)。
+  4. 纯净度：本文件交付时，不得夹带任何内部理论标记或分析术语（内部说明另成文档）。
+  5. 原话支撑格式：「原话文本」（来源·题号·时间戳）。无原话填「证据不足·建议补访」。
+-->
+<style>
+  :root{
+    --ink:#1f2933; --muted:#6b7785; --line:#d9e2ec; --bg:#f5f7fa;
+    --c1:#e8f0fe; --c2:#e6f4ea; --c3:#fef3e0;
+    --high:#1b873f; --mid:#b26a00; --low:#c0392b;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+       color:var(--ink);margin:0;background:#fff;line-height:1.55;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 26px 48px;}
+  header{border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:22px;}
+  h1{font-size:22px;margin:0 0 6px;}
+  .sub{color:var(--muted);font-size:13px;}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);}
+  .meta b{color:var(--ink);font-weight:600;}
+  .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  .col{background:var(--bg);border-radius:10px;padding:12px;break-inside:avoid;}
+  .col h2{font-size:15px;margin:0 0 4px;padding:8px 10px;border-radius:8px;}
+  .col.c1 h2{background:var(--c1);}
+  .col.c2 h2{background:var(--c2);}
+  .col.c3 h2{background:var(--c3);}
+  .col .q{font-size:12px;color:var(--muted);margin:0 0 12px;}
+  .cell{border:1px solid var(--line);border-radius:8px;background:#fff;
+        margin-bottom:12px;overflow:hidden;}
+  .cell .lbl{font-size:13px;font-weight:600;padding:7px 10px;background:#eef2f6;
+             border-bottom:1px solid var(--line);}
+  .cell .f{padding:7px 10px;border-bottom:1px dashed var(--line);font-size:13px;}
+  .cell .f:last-child{border-bottom:none;}
+  .cell .f .k{color:var(--muted);font-size:11px;display:block;margin-bottom:2px;
+              text-transform:uppercase;letter-spacing:.04em;}
+  .conf{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;
+        font-weight:600;color:#fff;}
+  .conf-high{background:var(--high);}
+  .conf-mid{background:var(--mid);}
+  .conf-low{background:var(--low);}
+  .cell.low{border-color:var(--low);box-shadow:0 0 0 2px rgba(192,57,43,.15);}
+  .st{font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid var(--line);
+      color:var(--muted);}
+  .st.insufficient{color:var(--low);border-color:var(--low);}
+  .legend{margin-top:22px;font-size:12px;color:var(--muted);
+          border-top:1px solid var(--line);padding-top:12px;display:flex;gap:20px;flex-wrap:wrap;}
+  .placeholder{color:#9aa5b1;font-style:italic;}
+  @media print{
+    body{font-size:11px;}
+    .wrap{max-width:none;padding:16px 12px 28px;}
+    .cols{grid-template-columns:1fr 1fr 1fr;}
+    .col{break-inside:auto;page-break-inside:auto;}
+    .cell{break-inside:avoid;page-break-inside:avoid;}
+    .cell .f .k{color:#000 !important;}
+    .legend{display:none;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>知识分析画布</h1>
+    <div class="sub">Knowledge Analysis Canvas · 基于 A/B/C 三问原话的结构化洞察</div>
+    <div class="meta">
+      <span>事业/业务：<b>{{business_context}}</b></span>
+      <span>分析目的：<b>{{research_purpose}}</b></span>
+      <span>成果锚定：<b>{{outcome_anchor}}</b></span>
+      <span>生成日期：<b>{{date}}</b></span>
+    </div>
+  </header>
+
+  <div class="cols">
+    <!-- ============ 列1 跟别人比 ============ -->
+    <div class="col c1">
+      <h2>① 跟别人比（vs Others）</h2>
+      <p class="q">知识分析三问 · A 类（双向）</p>
+
+      <div class="cell">
+        <div class="lbl">1.1 干得好别人干不了（独特知识候选）</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{动词+名词：在XX领域能做好XX事}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+
+      <div class="cell">
+        <div class="lbl">1.2 干不好别人能干成（知识短板）</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{别人干得了我们干不了之处}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+    </div>
+
+    <!-- ============ 列2 跟自己比 ============ -->
+    <div class="col c2">
+      <h2>② 跟自己比（Self Compare）</h2>
+      <p class="q">知识分析三问 · B 类（成败对照）</p>
+
+      <div class="cell">
+        <div class="lbl">2.1 成功因素（做对了什么）</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{绩效表现的解释·成功侧}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+
+      <div class="cell">
+        <div class="lbl">2.2 失败教训（做错了什么）</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{绩效表现的解释·失败侧}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+    </div>
+
+    <!-- ============ 列3 问优秀顾客 ============ -->
+    <div class="col c3">
+      <h2>③ 问优秀顾客（Best Customers）</h2>
+      <p class="q">知识分析三问 · C 类</p>
+
+      <div class="cell">
+        <div class="lbl">3.1 别人做不到的事（顾客视角的独特价值）</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{顾客原话里别家做不到之处}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+
+      <div class="cell">
+        <div class="lbl">3.2 资源 vs 知识 甄别结果</div>
+        <div class="f"><span class="k">结论</span><span class="placeholder">{{R资源项 / K知识项 分类}}</span></div>
+        <div class="f"><span class="k">原话支撑</span><span class="placeholder">{{「」(来源·题号·时间)}}</span></div>
+        <div class="f"><span class="k">置信度</span><span class="conf conf-mid">中</span></div>
+        <div class="f"><span class="k">状态</span><span class="st">假设·待验证</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span>置信度：<span class="conf conf-high">高</span> 多源一致 · <span class="conf conf-mid">中</span> 部分提及 · <span class="conf conf-low">低</span> 单条或矛盾</span>
+    <span>状态：已验证 / 假设·待验证 / 证据不足·建议补访</span>
+    <span>每格须附 ≥1 条原话；无原话标"证据不足·建议补访"</span>
+  </div>
+</div>
+</body>
+</html>

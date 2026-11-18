@@ -1,0 +1,33 @@
+{
+  "config": {"wide_screen_mode": true},
+  "header": {
+    "title": {"tag": "plain_text", "content": "知识手册半年回顾提醒"},
+    "template": "orange"
+  },
+  "elements": [
+    {
+      "tag": "div",
+      "text": {
+        "tag": "lark_md",
+        "content": "以下知识手册已到回顾周期，请相关同事审查并更新：\n\n**{{title}}**（v{{version}}）\n- 负责人：{{owner}}\n- 应回顾日：{{due_date}}\n- 已逾期：{{overdue_days}} 天\n- 仓库：{{repo}}"
+      }
+    },
+    {
+      "tag": "action",
+      "actions": [
+        {
+          "tag": "button",
+          "text": {"tag": "plain_text", "content": "去审查"},
+          "type": "primary",
+          "url": "{{review_url}}"
+        }
+      ]
+    },
+    {
+      "tag": "note",
+      "elements": [
+        {"tag": "plain_text", "content": "本提醒仅通知，不自动修改手册内容。"}
+      ]
+    }
+  ]
+}

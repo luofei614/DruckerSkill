@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识洞察报告</title>
+<!--
+  填充指引（不渲染）：
+  1. 本报告含三部分：动词+名词独特知识清单 / 四维度诊断 / 五维交汇机会卡。
+  2. 独特知识须"动词+名词"；资源项不列入。
+  3. 机会卡一律标"草稿·假设·待验证"，AI 不替企业下结论。
+  4. 纯净度：交付时不得夹带内部理论标记或分析术语（内部说明另成文档）。
+  5. 易腐提示必含：知识是易腐商品，须建立半年回顾机制。
+-->
+<style>
+  :root{
+    --ink:#1f2933; --muted:#6b7785; --line:#d9e2ec; --bg:#f5f7fa;
+    --high:#1b873f; --mid:#b26a00; --low:#c0392b;
+    --accent:#185fa5;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+       color:var(--ink);margin:0;background:#fff;line-height:1.6;}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 26px 48px;}
+  header{border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:8px;}
+  h1{font-size:22px;margin:0 0 6px;}
+  .sub{color:var(--muted);font-size:13px;}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);}
+  .meta b{color:var(--ink);font-weight:600;}
+  section{margin-top:30px;}
+  h2{font-size:17px;border-left:5px solid var(--accent);padding-left:10px;margin:0 0 14px;}
+  .note{background:#fff8e8;border:1px solid #f0d9a0;border-radius:8px;padding:10px 14px;
+        font-size:13px;color:#6b5500;margin-bottom:16px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;}
+  th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;}
+  th{background:#eef2f6;font-weight:600;}
+  .kid{font-family:monospace;font-size:12px;color:var(--accent);}
+  .perish-h{color:var(--low);font-weight:600;}
+  .perish-m{color:var(--mid);font-weight:600;}
+  .perish-l{color:var(--high);font-weight:600;}
+  .card{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:8px;
+        padding:12px 16px;margin-bottom:14px;background:var(--bg);}
+  .card .h{font-weight:600;margin-bottom:6px;}
+  .card .dim{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:12px;color:var(--muted);}
+  .card .dim b{color:var(--ink);display:block;font-size:11px;}
+  .tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:11px;
+       background:#eef2f6;color:var(--muted);border:1px solid var(--line);}
+  .warn{background:#fdecea;color:var(--low);border-color:var(--low);}
+  @media print{body{font-size:11px;} .note{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>知识洞察报告</h1>
+    <div class="sub">Knowledge Insight Report · 资源vs知识甄别 / 独特知识提炼 / 四维度诊断 / 五维交汇</div>
+    <div class="meta">
+      <span>事业/业务：<b>{{business_context}}</b></span>
+      <span>分析目的：<b>{{research_purpose}}</b></span>
+      <span>成果锚定：<b>{{outcome_anchor}}</b></span>
+      <span>生成日期：<b>{{date}}</b></span>
+    </div>
+  </header>
+
+  <div class="note">
+    ⚠️ 易腐提示：知识是易腐商品，会过时。本报告所有结论均须建立<strong>至少每半年回顾一次</strong>的机制；
+    每条知识标注易腐等级（高/中/低），高易腐者建议更短审查周期（如 90 天）。机会卡为草稿，需人工复核。
+  </div>
+
+  <!-- ===== 第一部分：动词+名词独特知识清单 ===== -->
+  <section>
+    <h2>一、动词+名词 独特知识清单</h2>
+    <table>
+      <thead>
+        <tr><th style="width:64px">编号</th><th>独特知识（动词+名词）</th><th style="width:70px">R/K</th>
+            <th style="width:64px">置信度</th><th style="width:80px">易腐等级</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="kid">K001</td>
+          <td><span class="placeholder">{{在 XX 领域，能做好 XX 事}}</span></td>
+          <td>K</td>
+          <td>中</td>
+          <td class="perish-h">高</td>
+        </tr>
+        <tr>
+          <td class="kid">K002</td>
+          <td><span class="placeholder">{{在 XX 领域，能做好 XX 事}}</span></td>
+          <td>K</td>
+          <td>中</td>
+          <td class="perish-m">中</td>
+        </tr>
+        <tr>
+          <td class="kid">…</td>
+          <td colspan="4"><span class="placeholder">{{按提炼结果逐条补充；资源项(R)不列入此表}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 第二部分：四维度诊断 ===== -->
+  <section>
+    <h2>二、四维度诊断（对 / 值 / 深 / 新）</h2>
+    <table>
+      <thead>
+        <tr><th style="width:64px">编号</th><th>对(正确)</th><th>值(回报)</th>
+            <th>深(融入)</th><th>新(改进)</th><th style="width:130px">薄弱项 Top</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="kid">K001</td>
+          <td><span class="placeholder">{{指向领先?有顾客证据?}}</span></td>
+          <td><span class="placeholder">{{收入真来自这?还是渠道?}}</span></td>
+          <td><span class="placeholder">{{系统化?还是只在几人脑中?}}</span></td>
+          <td><span class="placeholder">{{过时风险?哪些场景浪费?}}</span></td>
+          <td><span class="placeholder">{{魔鬼代言人质疑后的最弱项}}</span></td>
+        </tr>
+        <tr>
+          <td class="kid">…</td>
+          <td colspan="5"><span class="placeholder">{{逐条诊断；每维度可附 3 条魔鬼代言人质疑}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 第三部分：五维交汇机会卡 ===== -->
+  <section>
+    <h2>三、五维交汇 · 事业新机会假设卡（草稿）</h2>
+    <div class="card">
+      <div class="h">机会假设卡 O1 <span class="tag warn">草稿·假设·待验证</span></div>
+      <div class="dim">
+        <div><b>顾客三问</b><span class="placeholder">{{来自顾客画布/D1}}</span></div>
+        <div><b>独特知识</b><span class="placeholder">{{K0XX}}</span></div>
+        <div><b>企业渴望</b><span class="placeholder">{{用户补充}}</span></div>
+        <div><b>外界变化</b><span class="placeholder">{{用户补充}}</span></div>
+        <div><b>未满足需求</b><span class="placeholder">{{用户补充}}</span></div>
+      </div>
+      <p style="margin:10px 0 0"><b>机会假设：</b><span class="placeholder">{{交汇出的事业新机会，需人工复核}}</span></p>
+    </div>
+    <div class="card">
+      <div class="h">机会假设卡 O2 <span class="tag warn">草稿·假设·待验证</span></div>
+      <div class="dim">
+        <div><b>顾客三问</b><span class="placeholder">{{…}}</span></div>
+        <div><b>独特知识</b><span class="placeholder">{{…}}</span></div>
+        <div><b>企业渴望</b><span class="placeholder">{{…}}</span></div>
+        <div><b>外界变化</b><span class="placeholder">{{…}}</span></div>
+        <div><b>未满足需求</b><span class="placeholder">{{…}}</span></div>
+      </div>
+      <p style="margin:10px 0 0"><b>机会假设：</b><span class="placeholder">{{…}}</span></p>
+    </div>
+  </section>
+
+  <div class="note" style="margin-top:28px">
+    本报告由 AI 按框架升维生成，所有机会卡与诊断均为草稿，最终洞察与决策须由企业人工复核。
+  </div>
+</div>
+</body>
+</html>

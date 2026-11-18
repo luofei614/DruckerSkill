@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeliveryBundle (Knowledge)",
+  "description": "知识洞察交付物标准中间表示：知识画布(三源列×结论四字段) + 报告(A 动词+名词独特知识清单 / B 四维度诊断 / C 五维交汇事业新机会假设卡)。与 ddd-customer-insight 的 delivery_bundle.json 同构，供 ddd-opportunity-synthesis 双向反馈消费。绝不回扫 HTML。",
+  "type": "object",
+  "required": ["meta", "canvas", "report"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "批次元信息，用于幂等键与标题；consumer_hint 标明与 customer bundle 的衔接",
+      "properties": {
+        "title": {"type": "string", "examples": ["王老师道家课·知识洞察"]},
+        "business": {"type": "string", "examples": ["道家线上课：都市白领压力管理"]},
+        "generated_at": {"type": "string", "examples": ["2026-07-26"]},
+        "consumer_hint": {"type": "string", "examples": ["画布 col 为三源列；报告 C 节『顾客三问』列消费自 ddd-customer-insight delivery_bundle.json"]}
+      }
+    },
+    "canvas": {
+      "type": "array",
+      "description": "知识分析画布（三源列 × 结论）",
+      "items": {
+        "type": "object",
+        "required": ["cell_id", "col", "title", "conclusion", "confidence", "status"],
+        "properties": {
+          "cell_id": {"type": "string", "examples": ["1.1", "1.2", "2.1", "3.1"]},
+          "col": {"type": "string", "enum": ["跟别人比", "跟自己比", "问优秀顾客"]},
+          "title": {"type": "string", "examples": ["干得好别人干不了（独特知识候选）"]},
+          "conclusion": {"type": "string"},
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["text", "src"],
+              "properties": {
+                "text": {"type": "string"},
+                "src": {"type": "string", "examples": ["行12·列I", "S3·A-2·00:42"]}
+              }
+            }
+          },
+          "confidence": {"type": "string", "enum": ["高", "中", "低"]},
+          "status": {"type": "string", "enum": ["已验证", "假设·待验证", "证据不足·建议补访"]}
+        }
+      }
+    },
+    "report": {
+      "type": "array",
+      "description": "洞察报告叙事结构（A/B/C 三节）",
+      "items": {
+        "type": "object",
+        "required": ["title", "blocks"],
+        "properties": {
+          "title": {"type": "string", "examples": ["A. 动词+名词独特知识清单", "B. 四维度诊断", "C. 五维交汇·事业新机会假设卡"]},
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "text"],
+              "properties": {
+                "type": {"type": "string", "enum": ["h2", "h3", "p", "quote", "list"]},
+                "text": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

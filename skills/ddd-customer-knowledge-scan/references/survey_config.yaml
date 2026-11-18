@@ -1,0 +1,94 @@
+# 工作坊前调研题库（标准版 standard）
+# 来源：德鲁克「顾客分析八大现实」+「知识分析现实」，与 ddd-customer-survey / ddd-knowledge-survey 同源
+# 题型 type: single=单选, text=文本题
+# 选项顺序统一：认知/符合度由低到高（便于占比图直接读作"严重程度"）
+
+workshop:
+  default_name: "德鲁克工作坊·前调研"
+  variant: standard
+
+questions:
+  choice:
+    # ── 顾客维度（8 题）──────────────────────────────
+    - id: R1
+      dimension: 顾客
+      kp: "kp-06-02 内部视角盲区"
+      type: single
+      stem: "企业内部人往往没有顾客视角，大部分人不真正懂顾客。这符合咱们企业的情况吗？"
+      options: ["符合", "部分符合", "完全符合"]
+    - id: R2
+      dimension: 顾客
+      kp: "kp-06-03 理解顾客满足感"
+      type: single
+      stem: "我们清楚顾客在用我们的产品/服务时，真正获得的满足感是什么吗？"
+      options: ["不清楚", "部分清楚", "完全清楚"]
+    - id: R3
+      dimension: 顾客
+      kp: "kp-06-03 按满足感分对手"
+      type: single
+      stem: "我们能按'顾客看重的满足感'把真正的竞争对手分清楚吗？"
+      options: ["不清楚", "部分清楚", "很清楚"]
+    - id: R4
+      dimension: 顾客
+      kp: "kp-06-04 精力 vs 顾客在意"
+      type: single
+      stem: "我们的精力常花在自己看重的质量上，却没检查过顾客是否真在意。这符合咱们的情况吗？"
+      options: ["不符合", "部分符合", "完全符合"]
+    - id: R5
+      dimension: 顾客
+      kp: "kp-06-05 非必需"
+      type: single
+      stem: "我们的产品并不是顾客'离不了'的。我们意识到这一点了吗？"
+      options: ["没意识到", "部分意识到", "完全意识到"]
+    - id: R6
+      dimension: 顾客
+      kp: "kp-06-06 重视找顾客"
+      type: single
+      stem: "企业在'主动去找顾客、研究顾客'这件事上下了多少功夫？"
+      options: ["不重视", "偶尔重视", "十分重视"]
+    - id: R7
+      dimension: 顾客
+      kp: "kp-06-07 购买决策者"
+      type: single
+      stem: "我们清楚'真正做购买决定的人'是谁吗？"
+      options: ["不清楚", "部分清楚", "很清楚"]
+    - id: R8
+      dimension: 顾客
+      kp: "kp-06-08 以最终用途为起点"
+      type: single
+      stem: "我们做到'以市场/顾客的最终用途为起点'来思考业务了吗？"
+      options: ["没有做到", "偶尔做到", "做得很好"]
+    # ── 知识维度（4 题）──────────────────────────────
+    - id: K1
+      dimension: 知识
+      kp: "kp-07-01 看似简单其实最难"
+      type: single
+      stem: "我们独有的本事，往往是'看似简单、其实最难被复制'的。我们意识到这点了吗？"
+      options: ["没意识到", "部分意识到", "完全意识到"]
+    - id: K2
+      dimension: 知识
+      kp: "kp-07-06 易腐/持续更新"
+      type: single
+      stem: "我们的独门本事，是否在持续更新、刻意练习（例如每半年一次）？"
+      options: ["没更新", "偶尔更新", "持续更新"]
+    - id: K4
+      dimension: 知识
+      kp: "kp-07-03 资源 vs 知识"
+      type: single
+      stem: "我们分得清'难复制的知识'和'花钱就能买到的资源'吗？"
+      options: ["不清楚", "部分清楚", "很清楚"]
+    # ── 开放式（2 题）───────────────────────────────
+  open:
+    - id: Q1
+      dimension: 双维度
+      kp: "盲区 / 被忽略的重要事"
+      type: text
+      stem: "我们有哪些盲区——有哪些重要的事情，其实一直被我们忽略了？"
+    - id: Q2
+      dimension: 双维度
+      kp: "被低估的能力"
+      type: text
+      stem: "我们有哪些能力——自己觉得很简单、没被重视，但行业里其他人其实很难做到的？"
+
+# 字段定义（建表用）：时间戳(自动) + R1..R8(single) + K1/K2/K4(single) + Q1/Q2(text)（已移除 session）
+field_order: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "K1", "K2", "K4", "Q1", "Q2"]

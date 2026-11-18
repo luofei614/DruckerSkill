@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeliveryBundle",
+  "description": "顾客洞察交付物标准中间表示：画布(11格)+报告(叙事)。推送层据此翻译为各协作工具的在线可协作产物（多维表格/在线协作文档）。",
+  "type": "object",
+  "required": ["meta", "canvas", "report"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "批次元信息，用于幂等键与标题",
+      "properties": {
+        "title": {"type": "string", "examples": ["王老师道家课·顾客洞察"]},
+        "business": {"type": "string", "examples": ["道家线上课：都市白领压力管理"]},
+        "generated_at": {"type": "string", "examples": ["2026-07-26"]}
+      }
+    },
+    "canvas": {
+      "type": "array",
+      "description": "顾客分析画布 11 格",
+      "items": {
+        "type": "object",
+        "required": ["cell_id", "col", "title", "conclusion", "confidence", "status"],
+        "properties": {
+          "cell_id": {"type": "string", "examples": ["1.1", "2.3", "3.4"]},
+          "col": {"type": "string", "enum": ["顾客是谁", "买的是什么", "认为的价值"]},
+          "title": {"type": "string", "examples": ["现实顾客画像"]},
+          "conclusion": {"type": "string"},
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["text", "src"],
+              "properties": {
+                "text": {"type": "string"},
+                "src": {"type": "string", "examples": ["行12·列I", "S3·M5-12·00:42"]}
+              }
+            }
+          },
+          "confidence": {"type": "string", "enum": ["高", "中", "低"]},
+          "status": {"type": "string", "enum": ["已验证", "假设·待验证", "证据不足·建议补访"]}
+        }
+      }
+    },
+    "report": {
+      "type": "array",
+      "description": "洞察报告叙事结构",
+      "items": {
+        "type": "object",
+        "required": ["title", "blocks"],
+        "properties": {
+          "title": {"type": "string"},
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "text"],
+              "properties": {
+                "type": {"type": "string", "enum": ["h2", "h3", "p", "quote", "list"]},
+                "text": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

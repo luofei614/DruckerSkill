@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>顾客洞察报告</title>
+<!--
+  填充指引（不渲染）：
+  1. 本报告与"顾客分析画布"配套，聚焦洞察草稿与机会清单，不替企业下结论。
+  2. 看懂顾客两问：每条为"非理性行为 → 推测现实处境 → 支撑原话 → 状态(草稿·假设·待验证)"。
+  3. 非顾客机会：三类（从未接触/接触未成交/曾流失）各列流失原因 + 原话。
+  4. 竞争空白：三类竞争（直接/间接/非竞争对手）+ ②③交界处战略空白。
+  5. 行动假设卡：把洞察转为"可验证假设"，交企业决策。
+  6. 纯净度：交付客户时不得夹带任何内部理论标记或分析术语。
+-->
+<style>
+  :root{
+    --ink:#1f2933; --muted:#6b7785; --line:#d9e2ec; --bg:#f5f7fa;
+    --accent:#2563eb; --warn:#c0392b; --ok:#1b873f;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+       color:var(--ink);margin:0;background:#fff;line-height:1.6;}
+  .wrap{max-width:920px;margin:0 auto;padding:30px 28px 50px;}
+  header{border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:26px;}
+  h1{font-size:22px;margin:0 0 6px;}
+  .sub{color:var(--muted);font-size:13px;}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);}
+  .meta b{color:var(--ink);font-weight:600;}
+  section{margin-bottom:30px;break-inside:avoid;}
+  h2{font-size:17px;border-left:4px solid var(--accent);padding-left:10px;margin:0 0 14px;}
+  .note{font-size:12px;color:var(--warn);background:#fdf0ee;border:1px solid #f5c6c0;
+        border-radius:6px;padding:8px 12px;margin-bottom:14px;}
+  /* 看懂顾客两问 */
+  .twoway{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px;background:var(--bg);}
+  .twoway .row{display:grid;grid-template-columns:120px 1fr;gap:8px;margin-bottom:8px;}
+  .twoway .row:last-child{margin-bottom:0;}
+  .twoway .k{font-size:12px;color:var(--muted);font-weight:600;padding-top:2px;}
+  .twoway .v{font-size:14px;}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;background:#fff3cd;color:#8a6d00;border:1px solid #ffe69c;}
+  /* 非顾客 / 竞争 表 */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px;}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;}
+  th{background:#eef2f6;font-weight:600;}
+  td.quote{color:var(--muted);font-size:12px;}
+  /* 行动假设卡 */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .card{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:#fff;}
+  .card .h{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--accent);}
+  .card .f{font-size:12px;color:var(--muted);margin-bottom:4px;}
+  .card .f b{color:var(--ink);}
+  .placeholder{color:#9aa5b1;font-style:italic;}
+  @media print{body{font-size:11px;} .note{display:none;} .card{break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>顾客洞察报告</h1>
+    <div class="sub">Customer Insight Report · 基于调研结果的洞察草稿与机会清单</div>
+    <div class="meta">
+      <span>事业/产品：<b>{{business_context}}</b></span>
+      <span>样本：<b>{{sample_meta}}</b></span>
+      <span>生成日期：<b>{{date}}</b></span>
+    </div>
+  </header>
+
+  <!-- ============ 看懂顾客两问 ============ -->
+  <section>
+    <h2>一、看懂顾客两问（草稿 · 假设 · 待验证）</h2>
+    <div class="note">以下为从"非理性行为 → 现实处境"的推断草稿，仅供企业辩论，AI 不当作定论。</div>
+
+    <div class="twoway">
+      <div class="row"><div class="k">行为（原话）</div><div class="v"><span class="placeholder">{{顾客看似不合理的行为}}</span></div></div>
+      <div class="row"><div class="k">推测现实处境</div><div class="v"><span class="placeholder">{{使其行为变得理性的真实处境}}</span></div></div>
+      <div class="row"><div class="k">支撑原话</div><div class="v"><span class="placeholder">{{「」(场次·M·时间)}}</span></div></div>
+      <div class="row"><div class="k">状态</div><div class="v"><span class="tag">草稿·假设·待验证</span></div></div>
+    </div>
+    <!-- 复制上方 .twoway 块可追加第 2、3… 条 -->
+  </section>
+
+  <!-- ============ 非顾客机会 ============ -->
+  <section>
+    <h2>二、非顾客机会清单</h2>
+    <table>
+      <thead><tr><th style="width:22%">类型</th><th style="width:30%">流失/未成交原因 Top</th><th>代表原话</th></tr></thead>
+      <tbody>
+        <tr><td>从未接触</td><td><span class="placeholder">{{渠道/认知错配}}</span></td><td class="quote"><span class="placeholder">{{「」(场次·M·时间)}}</span></td></tr>
+        <tr><td>接触未成交</td><td><span class="placeholder">{{场景/价值错配}}</span></td><td class="quote"><span class="placeholder">{{「」(场次·M·时间)}}</span></td></tr>
+        <tr><td>曾流失</td><td><span class="placeholder">{{体验/替代错配}}</span></td><td class="quote"><span class="placeholder">{{「」(场次·M·时间)}}</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 竞争空白 ============ -->
+  <section>
+    <h2>三、竞争聚合与战略空白</h2>
+    <table>
+      <thead><tr><th style="width:20%">竞争类型</th><th style="width:30%">顾客亲述的替代满足感</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>直接竞争</td><td><span class="placeholder">{{}}</span></td><td><span class="placeholder">{{}}</span></td></tr>
+        <tr><td>间接竞争</td><td><span class="placeholder">{{}}</span></td><td><span class="placeholder">{{}}</span></td></tr>
+        <tr><td>非竞争对手</td><td><span class="placeholder">{{}}</span></td><td><span class="placeholder">{{}}</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;padding:12px 14px;border:1px dashed var(--accent);border-radius:8px;background:#f0f6ff;">
+      <b style="font-size:13px;">②×③ 交界处战略空白：</b>
+      <span class="placeholder">{{顾客有需求 + 各方都没满足好的空白点}}</span>
+    </div>
+  </section>
+
+  <!-- ============ 行动假设卡 ============ -->
+  <section>
+    <h2>四、行动假设卡（交企业决策）</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="h">假设 A</div>
+        <div class="f"><b>洞察来源：</b><span class="placeholder">{{来自哪一格/哪条两问}}</span></div>
+        <div class="f"><b>可验证假设：</b><span class="placeholder">{{若…则…}}</span></div>
+        <div class="f"><b>验证方式：</b><span class="placeholder">{{小步快跑/补访/AB}}</span></div>
+      </div>
+      <div class="card">
+        <div class="h">假设 B</div>
+        <div class="f"><b>洞察来源：</b><span class="placeholder">{{}}</span></div>
+        <div class="f"><b>可验证假设：</b><span class="placeholder">{{}}</span></div>
+        <div class="f"><b>验证方式：</b><span class="placeholder">{{}}</span></div>
+      </div>
+      <!-- 复制 .card 可追加 -->
+    </div>
+  </section>
+</div>
+</body>
+</html>

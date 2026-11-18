@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpportunitySynthesisBundle",
+  "description": "机会综合（三向融合升华）交付物标准中间表示：新机会清单 + 新能力清单 + 创新源命中 + 机会×能力矩阵 + 外部印证/差距。由 ddd-opportunity-synthesis 产出，消费 ddd-customer-insight 与 ddd-knowledge-insight 双 bundle（+ 可选 market_context）。",
+  "type": "object",
+  "required": ["meta", "opportunities", "capabilities", "matrix"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string", "examples": ["王老师道家课·机会综合"]},
+        "business": {"type": "string"},
+        "generated_at": {"type": "string"},
+        "market_context_used": {"type": "boolean", "description": "是否引入第三维外部市场情报"},
+        "consumer_hint": {"type": "string", "examples": ["本 bundle 由 ddd-opportunity-synthesis 产出，可回填 ddd-knowledge-manual / ddd-customer-survey"]}
+      }
+    },
+    "opportunities": {
+      "type": "array",
+      "description": "新机会清单（知识→市场反馈 + 外部市场→机会）",
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "source_dimension", "source_type", "source_refs", "confidence", "status"],
+        "properties": {
+          "id": {"type": "string", "examples": ["O-01"]},
+          "description": {"type": "string"},
+          "source_dimension": {"type": "string", "enum": ["内部双向", "外部市场空白", "交叉验证"]},
+          "source_type": {"type": "string", "enum": ["企业原话", "市场公开信息", "AI推演"]},
+          "source_refs": {
+            "type": "array",
+            "items": {"type": "object", "properties": {"cell_id": {"type": "string"}, "src": {"type": "string"}}}
+          },
+          "confidence": {"type": "string", "enum": ["高", "中", "低"]},
+          "status": {"type": "string", "enum": ["已验证", "假设·待验证", "证据不足·建议补访"]},
+          "source_kp": {"type": "string", "examples": ["kp-i07-01"]}
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "新能力清单（市场→知识反馈 + 市场要求→能力差距）",
+      "items": {
+        "type": "object",
+        "required": ["id", "gap", "source_dimension", "source_type", "market_evidence", "suggested_direction", "confidence"],
+        "properties": {
+          "id": {"type": "string", "examples": ["C-01"]},
+          "gap": {"type": "string"},
+          "source_dimension": {"type": "string", "enum": ["内部缺口", "市场要求差距"]},
+          "source_type": {"type": "string", "enum": ["企业原话", "市场公开信息", "AI推演"]},
+          "market_evidence": {"type": "string"},
+          "suggested_direction": {"type": "string"},
+          "confidence": {"type": "string", "enum": ["高", "中", "低"]}
+        }
+      }
+    },
+    "source_hits": {
+      "type": "array",
+      "description": "创新源命中表（重点 kp-i09-01 新知识）",
+      "items": {
+        "type": "object",
+        "properties": {
+          "opportunity_id": {"type": "string"},
+          "hit_kp": {"type": "string", "examples": ["kp-i09-01"]},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "matrix": {
+      "type": "object",
+      "description": "机会×能力矩阵",
+      "properties": {
+        "rows": {"type": "array", "items": {"type": "string"}},
+        "cols": {"type": "array", "items": {"type": "string"}},
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {"type": "string"},
+              "col": {"type": "string"},
+              "needed": {"type": "string", "enum": ["是", "否"]},
+              "strength": {"type": "string", "enum": ["高", "中", "低"]},
+              "note": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "external_validation": {
+      "type": "array",
+      "description": "外部印证/差距表（企业自己 vs 广阔市场）",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {"type": "string", "enum": ["印证", "差距", "冲突"]},
+          "ref": {"type": "string", "description": "关联机会ID/能力ID 或内部判断描述"},
+          "market_source": {"type": "string", "description": "market_context 条目 source（URL/报告名）"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "source_index": {
+      "type": "array",
+      "description": "外部市场情报来源索引（来源地址留存，置于报告末尾）：汇总 market_context 全部条目出处，供核查与复核",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "examples": ["M-01"]},
+          "dimension": {"type": "string", "description": "趋势/渠道变化/消费变迁/竞争结构/人口与认知变化"},
+          "claim": {"type": "string", "description": "情报摘要"},
+          "source": {"type": "string", "description": "来源地址：公开报告名 / 检索 URL"},
+          "source_type": {"type": "string", "enum": ["市场公开信息", "AI推演"]},
+          "confidence": {"type": "string", "enum": ["中", "低"]}
+        }
+      }
+    }
+  }
+}
